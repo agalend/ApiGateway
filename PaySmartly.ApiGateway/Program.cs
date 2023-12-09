@@ -3,6 +3,7 @@ using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using PaySmartly.ApiGateway.Env;
 using PaySmartly.ApiGateway.ReverseProxy;
 using Yarp.ReverseProxy.Configuration;
 
@@ -11,6 +12,8 @@ string ServiceName = "ApiGateway Service";
 var builder = WebApplication.CreateSlimBuilder(args);
 AddOpenTelemetryLogging(builder);
 
+IConfigurationSection endpointsSettings = builder.Configuration.GetSection("Endpoints");
+builder.Services.Configure<Endpoints>(endpointsSettings);
 builder.Services.AddSingleton<IEnvProvider, EnvProvider>();
 builder.Services.AddSingleton<IProxyConfigProvider, YarpProxyConfigProvider>();
 builder.Services.AddReverseProxy();
