@@ -42,9 +42,9 @@ namespace PaySmartly.ApiGateway.ReverseProxy
         {
             List<ClusterConfig> collection =
             [
-                GenerateCluster("ui-cluster", provider.GetUIEndpointUrls()),
-                GenerateCluster("calculations-cluster", provider.GetCalculationsEndpointUrls()),
-                GenerateCluster("archive-cluster", provider.GetArchiveEndpointUrls()),
+                GenerateCluster("ui-cluster", provider.GetUiEndpoints()),
+                GenerateCluster("calculations-cluster", provider.GetCalculationsEndpoints()),
+                GenerateCluster("archive-cluster", provider.GetArchiveEndpoints()),
             ];
 
             return collection;

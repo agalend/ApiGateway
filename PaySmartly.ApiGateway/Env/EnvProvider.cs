@@ -6,9 +6,9 @@ namespace PaySmartly.ApiGateway.ReverseProxy
 {
     public interface IEnvProvider
     {
-        IEnumerable<string> GetUIEndpointUrls();
-        IEnumerable<string> GetCalculationsEndpointUrls();
-        IEnumerable<string> GetArchiveEndpointUrls();
+        IEnumerable<string> GetUiEndpoints();
+        IEnumerable<string> GetCalculationsEndpoints();
+        IEnumerable<string> GetArchiveEndpoints();
     }
 
     public class EnvProvider(IOptions<Endpoints> endpointsSettings) : IEnvProvider
@@ -19,19 +19,19 @@ namespace PaySmartly.ApiGateway.ReverseProxy
 
         private readonly Endpoints endpoints = endpointsSettings.Value;
 
-        public IEnumerable<string> GetUIEndpointUrls() => GetEndpointUrls(UI_ENDPOINTS, endpoints.UI);
+        public IEnumerable<string> GetUiEndpoints() => GetEndpointUrls(UI_ENDPOINTS, endpoints.UI);
 
-        public IEnumerable<string> GetCalculationsEndpointUrls() => GetEndpointUrls(CALCULATIONS_ENDPOINTS, endpoints.Calculations);
+        public IEnumerable<string> GetCalculationsEndpoints() => GetEndpointUrls(CALCULATIONS_ENDPOINTS, endpoints.Calculations);
 
-        public IEnumerable<string> GetArchiveEndpointUrls() => GetEndpointUrls(ARCHIVE_ENDPOINTS, endpoints.Archive);
+        public IEnumerable<string> GetArchiveEndpoints() => GetEndpointUrls(ARCHIVE_ENDPOINTS, endpoints.Archive);
 
         private IEnumerable<string> GetEndpointUrls(string envVar, string[]? defaultUrls)
         {
             string? json = Environment.GetEnvironmentVariable(envVar);
 
             string[]? urls = json is null
-            ? defaultUrls
-            : JsonSerializer.Deserialize<string[]>(json);
+                ? defaultUrls
+                : JsonSerializer.Deserialize<string[]>(json);
 
             return urls ?? Enumerable.Empty<string>();
         }
