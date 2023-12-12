@@ -92,7 +92,7 @@ namespace PaySmartly.ApiGateway.ReverseProxy
                     {
                         Enabled = true,
                         Interval = TimeSpan.FromSeconds(1),
-                        Timeout = TimeSpan.FromSeconds(3),
+                        Timeout = TimeSpan.FromSeconds(1),
                         Policy = "ConsecutiveFailures",
                         Path = "/health"
                     }
